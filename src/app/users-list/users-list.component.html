@@ -1,0 +1,115 @@
+<!--<div class="col s4">
+  <div *ngIf="responseData">
+    <h2>Users list</h2>
+    &lt;!&ndash;<span>{{responseData | json}}</span>&ndash;&gt;
+    <ul>
+      <li *ngFor="let res of responseData.hits.hits">
+        <div class="card blue-grey darken-1">
+          <div class="card-content white-text">
+            &lt;!&ndash;<span class="card-title">Card Title</span>&ndash;&gt;
+            <span> {{res._id}}</span> <br>
+            <span> {{res._source.name.firstName}}</span> <br>
+            <span> {{res._source.name.surName}}</span> <br>
+            <span> {{res._source.dateOfBirthday}}</span> <br>
+            <span> {{res._source.phoneNumber}}</span> <br>
+            <span> {{res._source.email}}</span> <br>
+          </div>
+          <div class="card-action">
+            <input type="button" class="waves-effect waves-light btn-small" (click)="changeUserData(
+                   res._id, res._source.name.firstName, res._source.name.surName, res._source.dateOfBirthday, res._source.phoneNumber, res._source.email
+                   )"
+                   value="Change">
+            <input type="button" class="waves-effect waves-light btn-small" (click)="removeUser(res._id)"
+                   value="Remove">
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>-->
+
+<div *ngIf="showModalForm" id="user-change-modal">
+  <h5>Change user with id: {{id}}</h5>
+  <form novalidate [formGroup]="changeForm">
+    <fieldset formGroupName="name">
+      <div class="form-group input-field col s6">
+        <i *ngIf="submitted && getFormField().name.controls.firstName.errors " class="material-icons orange600 prefix">error</i>
+        <input data-length="5" id="firstName" type="text" class="form-control"
+               formControlName="firstName"
+               [ngClass]="{ 'is-invalid': submitted && getFormField().name.controls.firstName.errors}">
+      </div>
+      <div class="form-group form-group input-field col s6">
+        <i *ngIf="submitted && getFormField().name.controls.surName.errors " class="material-icons orange600 prefix">error</i>
+        <input id="surName" type="text" class="form-control"
+               formControlName="surName"
+               [ngClass]="{ 'is-invalid': submitted && getFormField().name.controls.surName.errors }">
+      </div>
+    </fieldset>
+    <div class="form-group form-group input-field col s6">
+      <i *ngIf="submitted && getFormField().dateOfBirthday.errors " class="material-icons orange600 prefix">error</i>
+      <input id="dateOfBirthday" type="date" class="form-control"
+             formControlName="dateOfBirthday"
+             [ngClass]="{ 'is-invalid': submitted && getFormField().dateOfBirthday.errors }">
+    </div>
+    <div class="form-group  input-field col s6">
+      <i *ngIf="submitted && getFormField().phoneNumber.errors " class="material-icons orange600 prefix">error</i>
+      <input id="phoneNumber" type="text" class="form-control"
+             formControlName="phoneNumber" [ngClass]="{ 'is-invalid': submitted && getFormField().phoneNumber.errors }">
+    </div>
+    <div class="form-group  input-field col s6">
+      <i *ngIf="submitted && getFormField().email.errors " class="material-icons orange600 prefix">error</i>
+      <input id="email" type="email" class="form-control"
+             formControlName="email" [ngClass]="{ 'is-invalid': submitted && getFormField().email.errors }">
+    </div>
+    <input type="submit" value="Save change" class="btn" (click)="saveChange()">
+    <input (click)="closeModal()" class="btn" value="Close" type="button">
+  </form>
+
+  <div class="modal-background"></div>
+</div>
+
+<div *ngIf="responseData" class="col s4 ">
+  <mat-accordion >
+    <mat-expansion-panel *ngFor="let res of responseData.hits.hits">
+      <mat-expansion-panel-header>
+        <mat-panel-title>User</mat-panel-title>
+        <mat-panel-description>{{res._id}}</mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>{{res._source.keys}}</p>
+      <table>
+        <tr *ngFor="let tr of res._source | keyvalue">
+          <th >
+            {{tr.key }}
+          </th>
+          <th>
+            <table *ngIf="isObject(tr.value)">
+              <tr *ngFor="let tr of tr.value | keyvalue">
+                <th>
+                {{tr.key }}:
+                </th>
+                <th>
+                {{tr.value }}
+                </th>
+              </tr>
+            </table>
+            <span *ngIf="!isObject(tr.value)">
+              {{tr.value }}
+            </span>
+          </th>
+        </tr>
+      </table>
+      <mat-action-row>
+        <button (click)="changeUserData(
+                   res._id, res._source.name.firstName,
+                   res._source.name.surName,
+                   res._source.dateOfBirthday,
+                   res._source.phoneNumber,
+                   res._source.email)"
+                mat-button>Change user data
+        </button>
+        <button (click)="removeUser(res._id)" mat-button>Remove user</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+

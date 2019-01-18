@@ -1,0 +1,43 @@
+<div class="col s8">
+  <h2>Add new user</h2>
+  <form novalidate [formGroup]="addedForm">
+    <fieldset formGroupName="_name">
+      <div class="form-group input-field col s6">
+        <i *ngIf="submitted && getFormField()._name.controls._firstName.errors " class="material-icons orange600 prefix">error</i>
+        <input data-length="5" id="_firstName" [placeholder]="placeholderFirstName" type="text" class="form-control"
+               formControlName="_firstName"
+               [ngClass]="{ 'is-invalid': submitted && getFormField()._name.controls._firstName.errors}">
+      </div>
+      <div class="form-group form-group input-field col s6">
+        <i *ngIf="submitted && getFormField()._name.controls._surName.errors " class="material-icons orange600 prefix">error</i>
+        <input id="_surName" [placeholder]="placeholderSurName" type="text" class="form-control"
+               formControlName="_surName"
+               [ngClass]="{ 'is-invalid': submitted && getFormField()._name.controls._surName.errors }">
+      </div>
+    </fieldset>
+    <div class="form-group form-group input-field col s6">
+      <i *ngIf="submitted && getFormField()._dateOfBirthday.errors " class="material-icons orange600 prefix">error</i>
+      <input id="_dateOfBirthday" [placeholder]="placeholderDateOfBirthday" type="date" class="form-control"
+             formControlName="_dateOfBirthday"
+             [ngClass]="{ 'is-invalid': submitted && getFormField()._dateOfBirthday.errors }">
+    </div>
+    <div class="form-group  input-field col s6">
+      <i *ngIf="submitted && getFormField()._phoneNumber.errors " class="material-icons orange600 prefix">error</i>
+      <input id="_phoneNumber" [placeholder]="placeholderPhoneNumber" type="text" class="form-control"
+             formControlName="_phoneNumber" [ngClass]="{ 'is-invalid': submitted && getFormField()._phoneNumber.errors }">
+    </div>
+    <div class="form-group  input-field col s6">
+      <i *ngIf="submitted && getFormField()._email.errors " class="material-icons orange600 prefix">error</i>
+      <input id="_email" [placeholder]="placeholderEmail" type="email" class="form-control"
+             formControlName="_email" [ngClass]="{ 'is-invalid': submitted && getFormField()._email.errors }">
+    </div>
+    <input type="submit" value="Add" class="btn" (click)="save()">
+  </form>
+
+  <!--<div>
+    {{addedForm.value | json}}
+  </div>
+  <div>
+    Status - {{addedForm.status}}
+  </div>-->
+</div>

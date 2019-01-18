@@ -1,0 +1,14 @@
+#user-change-modal{
+ /* display: none;*/
+  position: fixed;
+  top: 10%;
+  left: 28%;
+  margin: 20px;
+  padding: 20px;
+  z-index: 9999999999999;
+  background-color: aliceblue;
+
+  /*background-color: orangered;*/
+  width: 40%;
+}
+
